@@ -1,2 +1,3 @@
-# fernuni
-Einsendeaufgaben der Fernuni Hagen OOP-01618
+# Fernuni Hagen Einsendeaufgaben
+Einsendeaufgaben zum Module "Einführung in die Objektorientierte Programmierung" (01618)
+
