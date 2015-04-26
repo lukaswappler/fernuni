@@ -9,11 +9,5 @@ public class Entry<T> {
 		this.element = element;
 		this.next = next;
 		this.previous = previous;
-	}
-
-	@Override
-	public String toString() {
-		return "Entry [this=" + this.hashCode() +" element=" + element + ", next=" + next.hashCode() + ", previous="
-				+ previous.hashCode() + "]";
-	}
+	}	
 }
