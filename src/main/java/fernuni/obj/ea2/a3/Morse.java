@@ -1,4 +1,4 @@
-package fernuni.obj.ea2.a2;
+package fernuni.obj.ea2.a3;
 
 import java.util.LinkedList;
 
@@ -8,9 +8,6 @@ public class Morse {
 
     public static void main( String[] args )
     {   
-        
-        
-        
         String stringToTranslate = args[0];
         
         Morse morse = new Morse();
@@ -23,10 +20,6 @@ public class Morse {
                 System.out.println(morse.code(c));
             }
         }
-
-        
-        
-        
     }
     
     public Morse() {
@@ -61,21 +54,19 @@ public class Morse {
     }
     
     public String code(char b) {
-        int numericValue = (int) b;
+        int numericValue = (int) b;        
         
-//        System.out.println(b - '0'); 
-//        System.out.println(b - 48); 
-//        System.out.println(Character.getNumericValue(b)); 
-//        System.out.println(new Integer(nString)); 
-//        System.out.println(Integer.valueOf(nString)); 
-//        System.out.println(Integer.parseInt(nString)); 
-//        System.out.println(new BigInteger(nString)); 
-        
-        //cheack if its a char in the right range
+        //check if its a char in the right range
         if (65 <= numericValue && numericValue <= 90)  {
             return morsealphabet.get((numericValue) - 65);
         }
-            
+        
+        //check for lowercase  chars
+        char ucChar = Character.toUpperCase(b);
+        if (65 <= ucChar && ucChar <= 90)  {
+            return morsealphabet.get((ucChar) - 65);
+        }
+        
         return "Fehler!";
     }
     

@@ -17,7 +17,4 @@ public class Chef {
 		return m.getBudget();
 	}
 	
-	public void setNextChefTermin(Chef m, String nextAppointment) {
-		m.naechsterTermin = nextAppointment;
-	}
 }

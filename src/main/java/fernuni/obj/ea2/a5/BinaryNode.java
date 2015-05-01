@@ -63,8 +63,5 @@ public class BinaryNode {
         if (rightSon != null) {
             rightSon.inorder();
         }
-        
-        
     }
-
 }
