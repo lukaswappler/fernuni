@@ -1,6 +1,5 @@
 package fernuni.obj.ea2.a3;
 
-import java.util.LinkedList;
 
 public class Morse {
     
@@ -25,49 +24,52 @@ public class Morse {
     public Morse() {
         morsealphabet = new LinkedList<String>();
         
-        morsealphabet.add(".-"); //A
-        morsealphabet.add("-..."); //B
-        morsealphabet.add("-.-."); //C
-        morsealphabet.add("-.."); //D
-        morsealphabet.add("."); //E
-        morsealphabet.add("..-."); //F
-        morsealphabet.add("--."); //G
-        morsealphabet.add("...."); //H
-        morsealphabet.add(".."); //I
-        morsealphabet.add(".---"); //J
-        morsealphabet.add("-.-"); //K
-        morsealphabet.add(".-.."); //L
-        morsealphabet.add("--"); //M
-        morsealphabet.add("-."); //N
-        morsealphabet.add("---"); //O
-        morsealphabet.add(".--."); //P
-        morsealphabet.add("--.-"); //Q
-        morsealphabet.add(".-."); //R
-        morsealphabet.add("..."); //S
-        morsealphabet.add("-"); //T
-        morsealphabet.add("..-"); //U
-        morsealphabet.add("...-"); //V
-        morsealphabet.add(".--"); //W
-        morsealphabet.add("-..-"); //X
-        morsealphabet.add("-.--"); //Y
-        morsealphabet.add("--.."); //Z
+        morsealphabet.addLast(".-"); //A
+        morsealphabet.addLast("-..."); //B
+        morsealphabet.addLast("-.-."); //C
+        morsealphabet.addLast("-.."); //D
+        morsealphabet.addLast("."); //E
+        morsealphabet.addLast("..-."); //F
+        morsealphabet.addLast("--."); //G
+        morsealphabet.addLast("...."); //H
+        morsealphabet.addLast(".."); //I
+        morsealphabet.addLast(".---"); //J
+        morsealphabet.addLast("-.-"); //K
+        morsealphabet.addLast(".-.."); //L
+        morsealphabet.addLast("--"); //M
+        morsealphabet.addLast("-."); //N
+        morsealphabet.addLast("---"); //O
+        morsealphabet.addLast(".--."); //P
+        morsealphabet.addLast("--.-"); //Q
+        morsealphabet.addLast(".-."); //R
+        morsealphabet.addLast("..."); //S
+        morsealphabet.addLast("-"); //T
+        morsealphabet.addLast("..-"); //U
+        morsealphabet.addLast("...-"); //V
+        morsealphabet.addLast(".--"); //W
+        morsealphabet.addLast("-..-"); //X
+        morsealphabet.addLast("-.--"); //Y
+        morsealphabet.addLast("--.."); //Z
     }
     
     public String code(char b) {
-        int numericValue = (int) b;        
-        
-        //check if its a char in the right range
-        if (65 <= numericValue && numericValue <= 90)  {
-            return morsealphabet.get((numericValue) - 65);
-        }
-        
-        //check for lowercase  chars
+    	//check for lowercase  chars
         char ucChar = Character.toUpperCase(b);
-        if (65 <= ucChar && ucChar <= 90)  {
-            return morsealphabet.get((ucChar) - 65);
-        }
+    	
+    	int numericValue = (int) ucChar;        
         
-        return "Fehler!";
+    	numericValue -= 65;
+    	
+    	LinkedList<String>.ListIterator listIterator = morsealphabet.listIterator();
+    	String foundValue = "Fehler!";
+    	for (int i = 0; i < numericValue + 1; i++) {
+    		foundValue = "Fehler!";
+    		if (listIterator.hasNext()) {
+    			foundValue = listIterator.next();
+        	}
+		}
+
+   		return foundValue;    	
     }
     
 }

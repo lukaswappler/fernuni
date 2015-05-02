@@ -54,11 +54,11 @@ public class Ringbuffer<T> {
 		Entry<T> itarationElement = currentElement;
 		
 		itarationElement = itarationElement.previous;
-		System.out.println(itarationElement.element);
+		System.out.println(String.valueOf(itarationElement.element));
 		
 		while (firstElementOfCycle != itarationElement) {
 			itarationElement = itarationElement.previous;
-			System.out.println(itarationElement.element);
+			System.out.println(String.valueOf(itarationElement.element));
 		}
 	}
 	
