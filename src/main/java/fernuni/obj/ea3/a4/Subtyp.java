@@ -14,7 +14,7 @@ public class Subtyp {
 	}
 	
 	interface ImBetriebEntfernbaresGerät extends USBGeraet, VerzichtbaresGerät {
-		
+		public void entferneSofort();
 	}
 	
 	abstract class Peripheriegeraet {
@@ -82,6 +82,12 @@ public class Subtyp {
 			// TODO Auto-generated method stub
 			
 		}
+
+		@Override
+		public void entferneSofort() {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	}
 	
@@ -99,6 +105,12 @@ public class Subtyp {
 
 		@Override
 		public void istAngeschlossen() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void entferneSofort() {
 			// TODO Auto-generated method stub
 			
 		}
@@ -126,6 +138,12 @@ public class Subtyp {
 
 		@Override
 		public void istAngeschlossen() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void entferneSofort() {
 			// TODO Auto-generated method stub
 			
 		}
