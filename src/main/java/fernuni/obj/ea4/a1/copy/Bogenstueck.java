@@ -1,10 +1,11 @@
-package fernuni.obj.ea4.a1;
+package fernuni.obj.ea4.a1.copy;
 
-public class Bogenstueck implements Geometrieobjekt {
+public class Bogenstueck extends Offen implements Geometrieobjekt {
 
     @Override
     public void druckeEigenschaften() {
-        System.out.println("Ist nicht geschlossen");
+    	super.druckeEigenschaften();
+    	
         System.out.println("Ist keine Gerade");
         System.out.println("Hat einen Anfang und einen Endpunkt");
         System.out.println("Hat keine Ecken");

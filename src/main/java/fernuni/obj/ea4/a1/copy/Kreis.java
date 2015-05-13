@@ -1,10 +1,11 @@
-package fernuni.obj.ea4.a1;
+package fernuni.obj.ea4.a1.copy;
 
-public class Kreis implements Geometrieobjekt {
+public class Kreis extends Geschlossen implements Geometrieobjekt {
 
     @Override
     public void druckeEigenschaften() {
-        System.out.println("Ist geschlossen");        
+    	super.druckeEigenschaften();
+    	           
         System.out.println("Immer gleicher Radius von Mittelpunkt zum Rand");
         System.out.println("Einen Kreis zeichnet man mit einem Zirkel");
         System.out.println("Hat keine Ecken");

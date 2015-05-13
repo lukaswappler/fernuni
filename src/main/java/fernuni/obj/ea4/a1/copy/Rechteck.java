@@ -1,14 +1,16 @@
-package fernuni.obj.ea4.a1;
+package fernuni.obj.ea4.a1.copy;
 
-public class Rechteck implements Geometrieobjekt {
+public class Rechteck extends Geschlossen implements Geometrieobjekt {
 
     @Override
     public void druckeEigenschaften() {
-        System.out.println("Vier Ecken");
+    	super.druckeEigenschaften();
+    	
+    	System.out.println("Vier Ecken");
         System.out.println("Vier Symetrieachsen");
         System.out.println("Vier Seiten");
         System.out.println("Ist punktsymetrisch");
-        System.out.println("Ist geschlossen");  
+          
     }
 
 }

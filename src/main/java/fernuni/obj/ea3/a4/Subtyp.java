@@ -28,9 +28,15 @@ public class Subtyp {
 			
 		}
 	}
+	
+	abstract class Ausgabegerät extends Peripheriegeraet {
+		public void wiederholeLetzteAusgabe() {
+			
+		}
+	}
 
 	
-	class Monitor extends Peripheriegeraet implements UnverzichtbaresGerät {
+	class Monitor extends Ausgabegerät implements UnverzichtbaresGerät {
 	
 		public void leseBildauflösung() {
 			
@@ -124,7 +130,7 @@ public class Subtyp {
 	}
 	
 	
-	class Drucker extends Peripheriegeraet implements ImBetriebEntfernbaresGerät  {
+	class Drucker extends Ausgabegerät implements ImBetriebEntfernbaresGerät  {
 	
 		public void leseTintenstand() {
 			
