@@ -71,7 +71,7 @@ public class Subtyp {
 		
 	}
 	
-	class Scanner extends Peripheriegeraet implements ImBetriebEntfernbaresGerät  {
+	class Scanner extends Eingabegeraet implements ImBetriebEntfernbaresGerät  {
 	
 		public void starteScan() {
 			
@@ -123,8 +123,14 @@ public class Subtyp {
 	
 	}
 	
-	class Kamera extends Peripheriegeraet {
+	class Kamera extends Eingabegeraet implements VerzichtbaresGerät {
 		public void macheFoto() {
+			
+		}
+
+		@Override
+		public void istAngeschlossen() {
+			// TODO Auto-generated method stub
 			
 		}
 	}
@@ -155,21 +161,4 @@ public class Subtyp {
 		}
 	
 	}
-
-
-	
-	
-	
-	
-	
-	public Subtyp() {
-		super();
-		// TODO Auto-generated constructor stub
-		
-		Drucker drucker = new Drucker();
-		
-		
-		
-	}
-	
 }
