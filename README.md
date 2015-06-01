@@ -3,4 +3,10 @@ Einsendeaufgaben zum Module "Einführung in die Objektorientierte Programmierung
 
 EA1 abgegeben
 
-EA2 fertig zur Abgabe
+EA2 abgegeben
+
+EA3 abgegeben
+
+EA4 abgegeben
+
+EA5 in Arbeit
