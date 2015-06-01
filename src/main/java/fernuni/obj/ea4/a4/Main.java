@@ -90,8 +90,8 @@ public class Main {
         CharEingabeStrom cs;
 
         cs = new StringLeser(s);
-        cs = new UmlautSzFilter(cs);
         cs = new GrossBuchstabenFilter(cs);
+        cs = new UmlautSzFilter(cs);
         int z = cs.read();
         while (z != -1) {
             System.out.print((char) z);
