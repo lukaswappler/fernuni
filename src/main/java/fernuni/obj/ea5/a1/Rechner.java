@@ -3,9 +3,11 @@ package fernuni.obj.ea5.a1;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.LayoutManager;
+import java.awt.Panel;
+import java.awt.TextField;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -25,47 +27,55 @@ public class Rechner extends Frame {
         this.setSize(150, 200);
         this.setLocation(100, 100);
         this.setBackground(Color.gray);
-        /* FlowLayout fuer Ziffern- und Operatorpanel setzen */
-        
-        FlowLayout flowLayout = new FlowLayout();
-        
-        Button button = new Button();
-        //button.size(50, 50);
-        
-        button.setLabel("1QWE2");
-        button.setVisible(true);
-
-        
-        Button button2 = new Button();
-        //button.size(50, 50);
-        
-        button2.setLabel("1QWE2");
-        button2.setVisible(true);
-
-        this.add(button,BorderLayout.NORTH);
-        this.add(button2, BorderLayout.WEST);
-        
-        Container container = new Container();
-        //container.setLayout(mgr);
-
-        
-        //borderLayout1.
-        //borderLayout1.addLayoutComponent("btn", button);
-        
-        //borderLayout1.addLayoutComponent(flowLayout, null);
-        
-        //flowLayout.addLayoutComponent("button", button);
         
         
-        
-        //this.setLayout(flowLayout);
-        
+        /* FlowLayout fuer Ziffern- und Operatorpanel erzeugen */
+        LayoutManager flowLayout = new FlowLayout();
         
         /* Zifferntasten ggf. erzeugen und in Ziffernpanel einfuegen */
+        Panel centerContainer = new Panel();        
+        
+        centerContainer.setLayout(flowLayout);
+        for (int i = 0; i < 10; i++) {            
+            Button digitButton = new Button();
+            digitButton.setLabel(String.valueOf(i));
+            //digitButton.add
+            
+            centerContainer.add(digitButton);
+            
+        }
+        this.add(centerContainer,BorderLayout.CENTER);
+        
+        
         /* Operatortasten ggf. erzeugen und in Operatorpanel einfuegen */
-        /* Objekte in Frame plazieren */
-        //this.add(...);
-        /* ... */
+        Panel bottomContainer = new Panel();        
+        bottomContainer.setLayout(flowLayout);        
+        
+        Button plusButton = new Button();
+        plusButton.setLabel("+");
+        bottomContainer.add(plusButton);
+        
+        Button minusButton = new Button();
+        minusButton.setLabel("-");
+        bottomContainer.add(minusButton);
+        
+        Button multipleButton = new Button();
+        multipleButton.setLabel("*");
+        bottomContainer.add(multipleButton);
+        
+        Button equalButton = new Button();
+        equalButton.setLabel("=");
+        bottomContainer.add(equalButton);
+        
+        /* Inputfeld / Textfeld erzeugen und hinzufügen*/
+        TextField inputField = new TextField();
+        
+        
+        
+        /* Objekte in Frame platzieren */
+        this.add(inputField,BorderLayout.NORTH);
+        this.add(centerContainer,BorderLayout.CENTER);
+        this.add(bottomContainer,BorderLayout.SOUTH);
     }
 
     /* ... */
