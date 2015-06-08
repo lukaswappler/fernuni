@@ -11,4 +11,6 @@ class Tourist implements Fahnenbeobachter {
     public void fahnenstatusGeaendert(Fahnenmast fahnenmast) {
         System.out.println(name + " vermeldet fuer den Fahnenmast: " + fahnenmast.getFahnenposition());
     }
+	
+	
 }
