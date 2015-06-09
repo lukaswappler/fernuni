@@ -17,6 +17,9 @@ public class Rechner extends Frame {
     
     private BorderLayout borderLayout1 = new BorderLayout();
 
+    private char[] operators = new char[10];
+    private int[] values = new int[20]; 
+    
     /*
      * AWT-Komponenten fuer Eingabetextfeld, Zifferntasten, Operatortasten sowie Ziffernpanel und Operatorpanel deklarieren und soweit moeglich bereits zugehoerige Objekte erzeugen
      */
@@ -35,11 +38,17 @@ public class Rechner extends Frame {
         /* Zifferntasten ggf. erzeugen und in Ziffernpanel einfuegen */
         Panel centerContainer = new Panel();        
         
+        NumberButtonListener numberButtonListener = new NumberButtonListener();
+        OperatorListener operatorListener = new OperatorListener();
+        
         centerContainer.setLayout(flowLayout);
         for (int i = 0; i < 10; i++) {            
             Button digitButton = new Button();
             digitButton.setLabel(String.valueOf(i));
-            //digitButton.add
+            digitButton.setActionCommand(String.valueOf(i));
+
+            digitButton.addActionListener(numberButtonListener);
+            
             
             centerContainer.add(digitButton);
             
@@ -53,23 +62,34 @@ public class Rechner extends Frame {
         
         Button plusButton = new Button();
         plusButton.setLabel("+");
+        plusButton.setActionCommand("+");
+        plusButton.addActionListener(operatorListener);
         bottomContainer.add(plusButton);
         
         Button minusButton = new Button();
         minusButton.setLabel("-");
+        minusButton.setActionCommand("-");
+        minusButton.addActionListener(operatorListener);
         bottomContainer.add(minusButton);
         
         Button multipleButton = new Button();
         multipleButton.setLabel("*");
+        multipleButton.setActionCommand("*");
+        multipleButton.addActionListener(operatorListener);
         bottomContainer.add(multipleButton);
         
         Button equalButton = new Button();
         equalButton.setLabel("=");
+        equalButton.setActionCommand("=");
+        equalButton.addActionListener(operatorListener);
         bottomContainer.add(equalButton);
         
         /* Inputfeld / Textfeld erzeugen und hinzufügen*/
         TextField inputField = new TextField();
-        
+        //make it readonly
+        inputField.setEditable(false);        
+        inputField.setText("");
+        numberButtonListener.setTextField(inputField);
         
         
         /* Objekte in Frame platzieren */
