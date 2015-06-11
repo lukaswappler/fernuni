@@ -7,12 +7,18 @@ import java.awt.event.ActionListener;
 public class NumberButtonListener implements ActionListener {
 
     private TextField textField;
+    
+    private Operator operator;
 
     @Override
     public void actionPerformed(ActionEvent e) {
         
         System.out.println(e.getActionCommand());
         
+        if (Operator.EQUAL.equals(operator)) {
+            textField.setText("");
+            operator = null;
+        }
         
         //add the value from the pressed button to the field
         String text = textField.getText();        
@@ -26,6 +32,10 @@ public class NumberButtonListener implements ActionListener {
 
     public void setTextField(TextField textField) {
         this.textField = textField;
+    }
+    
+    public void setLastOperator(Operator operator) {
+        this.operator = operator;
     }
 
 }

@@ -8,6 +8,8 @@ import java.awt.Frame;
 import java.awt.LayoutManager;
 import java.awt.Panel;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -17,8 +19,12 @@ public class Rechner extends Frame {
     
     private BorderLayout borderLayout1 = new BorderLayout();
 
-    private char[] operators = new char[10];
-    private int[] values = new int[20]; 
+    private Operator operator = null;
+    private int operand = 0; 
+    
+    private TextField inputField = new TextField();
+    
+    private NumberButtonListener numberButtonListener = new NumberButtonListener();
     
     /*
      * AWT-Komponenten fuer Eingabetextfeld, Zifferntasten, Operatortasten sowie Ziffernpanel und Operatorpanel deklarieren und soweit moeglich bereits zugehoerige Objekte erzeugen
@@ -38,8 +44,9 @@ public class Rechner extends Frame {
         /* Zifferntasten ggf. erzeugen und in Ziffernpanel einfuegen */
         Panel centerContainer = new Panel();        
         
-        NumberButtonListener numberButtonListener = new NumberButtonListener();
+        
         OperatorListener operatorListener = new OperatorListener();
+        
         
         centerContainer.setLayout(flowLayout);
         for (int i = 0; i < 10; i++) {            
@@ -57,39 +64,43 @@ public class Rechner extends Frame {
         
         
         /* Operatortasten ggf. erzeugen und in Operatorpanel einfuegen */
-        Panel bottomContainer = new Panel();        
-        bottomContainer.setLayout(flowLayout);        
+        Panel bottomContainer = new Panel();
+        bottomContainer.setLayout(flowLayout);
         
         Button plusButton = new Button();
-        plusButton.setLabel("+");
-        plusButton.setActionCommand("+");
+        plusButton.setLabel(Operator.PLUS.getLabel());
+        plusButton.setActionCommand(Operator.PLUS.getLabel());
         plusButton.addActionListener(operatorListener);
         bottomContainer.add(plusButton);
         
         Button minusButton = new Button();
-        minusButton.setLabel("-");
-        minusButton.setActionCommand("-");
+        minusButton.setLabel(Operator.MINUS.getLabel());
+        minusButton.setActionCommand(Operator.MINUS.getLabel());
         minusButton.addActionListener(operatorListener);
         bottomContainer.add(minusButton);
         
         Button multipleButton = new Button();
-        multipleButton.setLabel("*");
-        multipleButton.setActionCommand("*");
+        multipleButton.setLabel(Operator.MULTIPLE.getLabel());
+        multipleButton.setActionCommand(Operator.MULTIPLE.getLabel());
         multipleButton.addActionListener(operatorListener);
         bottomContainer.add(multipleButton);
         
         Button equalButton = new Button();
         equalButton.setLabel("=");
         equalButton.setActionCommand("=");
+        
+        //
+        //equalButton.addActionListener(operatorListener);
         equalButton.addActionListener(operatorListener);
         bottomContainer.add(equalButton);
         
         /* Inputfeld / Textfeld erzeugen und hinzufügen*/
-        TextField inputField = new TextField();
+        
         //make it readonly
         inputField.setEditable(false);        
         inputField.setText("");
         numberButtonListener.setTextField(inputField);
+        
         
         
         /* Objekte in Frame platzieren */
@@ -107,5 +118,42 @@ public class Rechner extends Frame {
             }
         });
         rechner.setVisible(true);
+    }
+
+    public class OperatorListener implements ActionListener {
+               
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+            System.out.println(e.getActionCommand());
+            
+            int inputFieldValue = Integer.parseInt(inputField.getText()); 
+            if (operator == null || operator == Operator.EQUAL) {
+                operand = inputFieldValue;
+                inputField.setText("");
+            } else {
+                operand = operator.performOperation(operand, inputFieldValue);
+                if (Operator.EQUAL.getLabel().equals(e.getActionCommand())) {
+                    inputField.setText(String.valueOf(operand));
+                    numberButtonListener.setLastOperator(Operator.EQUAL);
+                } else {
+                    inputField.setText("");
+                }
+            }
+            
+            //add the value from the pressed button to the field
+            if (Operator.PLUS.getLabel().equals(e.getActionCommand())) {
+                operator = Operator.PLUS;
+            } else if (Operator.MINUS.getLabel().equals(e.getActionCommand())) {
+                operator = Operator.MINUS;
+            } else if (Operator.MULTIPLE.getLabel().equals(e.getActionCommand())) {
+                operator = Operator.MULTIPLE;
+            } else if (Operator.EQUAL.getLabel().equals(e.getActionCommand())) {
+                operator = Operator.EQUAL;
+            }
+            
+            
+            
+        }
     }
 }

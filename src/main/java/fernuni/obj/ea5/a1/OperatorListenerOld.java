@@ -3,7 +3,7 @@ package fernuni.obj.ea5.a1;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class OperatorListener implements ActionListener {
+public class OperatorListenerOld implements ActionListener {
     
     private char[] operators;
     private int[] values; 
