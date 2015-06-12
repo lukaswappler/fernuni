@@ -13,8 +13,6 @@ public class NumberButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        System.out.println(e.getActionCommand());
-        
         if (Operator.EQUAL.equals(operator)) {
             textField.setText("");
             operator = null;

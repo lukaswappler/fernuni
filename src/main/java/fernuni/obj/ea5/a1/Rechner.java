@@ -25,6 +25,7 @@ public class Rechner extends Frame {
     private TextField inputField = new TextField();
     
     private NumberButtonListener numberButtonListener = new NumberButtonListener();
+    private OperatorListener operatorListener = new OperatorListener();
     
     /*
      * AWT-Komponenten fuer Eingabetextfeld, Zifferntasten, Operatortasten sowie Ziffernpanel und Operatorpanel deklarieren und soweit moeglich bereits zugehoerige Objekte erzeugen
@@ -38,17 +39,56 @@ public class Rechner extends Frame {
         this.setBackground(Color.gray);
         
         
-        /* FlowLayout fuer Ziffern- und Operatorpanel erzeugen */
-        LayoutManager flowLayout = new FlowLayout();
+        /**
+         * LAYOUT
+         */
         
+        /* FlowLayout fuer Ziffern- und Operatorpanel erzeugen */
+        LayoutManager flowLayout = new FlowLayout();        
         /* Zifferntasten ggf. erzeugen und in Ziffernpanel einfuegen */
         Panel centerContainer = new Panel();        
-        
-        
-        OperatorListener operatorListener = new OperatorListener();
-        
-        
         centerContainer.setLayout(flowLayout);
+        /* Operatortasten ggf. erzeugen und in Operatorpanel einfuegen */
+        Panel bottomContainer = new Panel();
+        bottomContainer.setLayout(flowLayout);
+        
+        /* Objekte in Frame platzieren */
+        this.add(inputField,BorderLayout.NORTH);
+        this.add(centerContainer,BorderLayout.CENTER);
+        this.add(bottomContainer,BorderLayout.SOUTH);
+        
+        
+        
+        /**
+         * BUTTONS
+         */
+        createNumberButtons(centerContainer);
+        createOperatorButtons(bottomContainer);
+        
+        /**
+         * INPUT FIELD
+         */
+        /* Inputfeld / Textfeld erzeugen und hinzufügen*/
+        //make it readonly
+        inputField.setEditable(false);        
+        inputField.setText("");
+        numberButtonListener.setTextField(inputField);
+    }
+
+    private void createOperatorButtons(Panel bottomContainer) {
+        // TODO Auto-generated method stub
+
+        Operator[] values = Operator.values();
+        for (int i = 0; i < values.length; i++) {
+            Button operatorButton = new Button();
+            operatorButton.setLabel(values[i].getLabel());
+            operatorButton.setActionCommand(values[i].getLabel());
+            operatorButton.addActionListener(operatorListener);
+            bottomContainer.add(operatorButton);
+        }
+    }
+
+    private void createNumberButtons(Panel centerContainer) {
         for (int i = 0; i < 10; i++) {            
             Button digitButton = new Button();
             digitButton.setLabel(String.valueOf(i));
@@ -56,57 +96,9 @@ public class Rechner extends Frame {
 
             digitButton.addActionListener(numberButtonListener);
             
-            
             centerContainer.add(digitButton);
-            
         }
         this.add(centerContainer,BorderLayout.CENTER);
-        
-        
-        /* Operatortasten ggf. erzeugen und in Operatorpanel einfuegen */
-        Panel bottomContainer = new Panel();
-        bottomContainer.setLayout(flowLayout);
-        
-        Button plusButton = new Button();
-        plusButton.setLabel(Operator.PLUS.getLabel());
-        plusButton.setActionCommand(Operator.PLUS.getLabel());
-        plusButton.addActionListener(operatorListener);
-        bottomContainer.add(plusButton);
-        
-        Button minusButton = new Button();
-        minusButton.setLabel(Operator.MINUS.getLabel());
-        minusButton.setActionCommand(Operator.MINUS.getLabel());
-        minusButton.addActionListener(operatorListener);
-        bottomContainer.add(minusButton);
-        
-        Button multipleButton = new Button();
-        multipleButton.setLabel(Operator.MULTIPLE.getLabel());
-        multipleButton.setActionCommand(Operator.MULTIPLE.getLabel());
-        multipleButton.addActionListener(operatorListener);
-        bottomContainer.add(multipleButton);
-        
-        Button equalButton = new Button();
-        equalButton.setLabel("=");
-        equalButton.setActionCommand("=");
-        
-        //
-        //equalButton.addActionListener(operatorListener);
-        equalButton.addActionListener(operatorListener);
-        bottomContainer.add(equalButton);
-        
-        /* Inputfeld / Textfeld erzeugen und hinzufügen*/
-        
-        //make it readonly
-        inputField.setEditable(false);        
-        inputField.setText("");
-        numberButtonListener.setTextField(inputField);
-        
-        
-        
-        /* Objekte in Frame platzieren */
-        this.add(inputField,BorderLayout.NORTH);
-        this.add(centerContainer,BorderLayout.CENTER);
-        this.add(bottomContainer,BorderLayout.SOUTH);
     }
 
     /* ... */
@@ -125,7 +117,7 @@ public class Rechner extends Frame {
         @Override
         public void actionPerformed(ActionEvent e) {
             
-            System.out.println(e.getActionCommand());
+            Operator newOperator = Operator.labelOf(e.getActionCommand());
             
             int inputFieldValue = Integer.parseInt(inputField.getText()); 
             if (operator == null || operator == Operator.EQUAL) {
@@ -133,7 +125,7 @@ public class Rechner extends Frame {
                 inputField.setText("");
             } else {
                 operand = operator.performOperation(operand, inputFieldValue);
-                if (Operator.EQUAL.getLabel().equals(e.getActionCommand())) {
+                if (Operator.EQUAL.equals(newOperator)) {
                     inputField.setText(String.valueOf(operand));
                     numberButtonListener.setLastOperator(Operator.EQUAL);
                 } else {
@@ -141,19 +133,7 @@ public class Rechner extends Frame {
                 }
             }
             
-            //add the value from the pressed button to the field
-            if (Operator.PLUS.getLabel().equals(e.getActionCommand())) {
-                operator = Operator.PLUS;
-            } else if (Operator.MINUS.getLabel().equals(e.getActionCommand())) {
-                operator = Operator.MINUS;
-            } else if (Operator.MULTIPLE.getLabel().equals(e.getActionCommand())) {
-                operator = Operator.MULTIPLE;
-            } else if (Operator.EQUAL.getLabel().equals(e.getActionCommand())) {
-                operator = Operator.EQUAL;
-            }
-            
-            
-            
+            operator = newOperator;
         }
     }
 }
