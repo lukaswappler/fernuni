@@ -21,8 +21,8 @@ public enum Operator {
             return operand1 + operand2;
         } else if (this.equals(MINUS)) {
             return operand1 - operand2;
-        } else if (this.equals(MULTIPLE)) {
-            return operand1 * operand2;
+        } else if (this.equals(MULTIPLE)) {            
+        	return operand1 * operand2;
         }
         
         return 0;
