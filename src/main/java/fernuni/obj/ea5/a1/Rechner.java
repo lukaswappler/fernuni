@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JOptionPane;
+
 public class Rechner extends Frame {
     
     private static final long serialVersionUID = 9025074780899407113L;
@@ -118,8 +120,17 @@ public class Rechner extends Frame {
         public void actionPerformed(ActionEvent e) {
             
             Operator newOperator = Operator.labelOf(e.getActionCommand());
+                        
+            int inputFieldValue = 0;
+            try {
+            	inputFieldValue = Integer.parseInt(inputField.getText());
+            } catch(NumberFormatException exception) {
+            	JOptionPane.showMessageDialog(inputField, "The number was to large. The calculator is resetted completely");
+            	inputField.setText("");
+            	operator = null;
+            	return;
+            }
             
-            int inputFieldValue = Integer.parseInt(inputField.getText()); 
             if (operator == null || operator == Operator.EQUAL) {
                 operand = inputFieldValue;
                 inputField.setText("");
