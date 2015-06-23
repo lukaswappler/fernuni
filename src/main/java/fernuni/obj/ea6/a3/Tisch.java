@@ -1,9 +1,14 @@
 package fernuni.obj.ea6.a3;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Tisch {
 		
 	private Stab[] staebchen = new Stab[5];
 	private Schuessel[] schuesseln = new Schuessel[5];
+	
+	private List<Philosoph> guests = new ArrayList<>();	
 	
 	public Tisch() {
 		super();
@@ -92,5 +97,16 @@ public class Tisch {
 		}
 		
 		return null;
+	}
+
+
+	public List<Philosoph> getGuests() {
+		return guests;
+	}
+	
+	synchronized public void notifyAboutUnusedBar() {
+		for (Philosoph philosoph : guests) {
+			philosoph.notify();
+		}
 	}
 }
