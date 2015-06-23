@@ -57,7 +57,7 @@ public class Philosoph extends Thread {
 						} else if (!hasLeftBar && !this.choosenBowl.getLeftBar().isUsed()) {
 							this.choosenBowl.getLeftBar().setUsed(true);
 							hasLeftBar = true;
-							System.out.println(philosophName + " hat linkes Stäbchen");
+							System.out.println(philosophName + " hat das linke Stäbchen");
 							continue;
 						}
 						
@@ -67,7 +67,7 @@ public class Philosoph extends Thread {
 						} else if (!hasRightBar && !this.choosenBowl.getRightBar().isUsed()) {
 							this.choosenBowl.getRightBar().setUsed(true);
 							hasRightBar = true;
-							System.out.println(philosophName + " hat rechtes Stäbchen");
+							System.out.println(philosophName + " hat das rechte Stäbchen");
 							continue;
 						}
 	
@@ -85,7 +85,7 @@ public class Philosoph extends Thread {
 						if (hasLeftBar) {					
 							this.choosenBowl.getLeftBar().setUsed(false);
 							hasLeftBar = false;
-							System.out.println(philosophName + " legt das linkes Stäbchen hin");
+							System.out.println(philosophName + " legt das linke Stäbchen hin");
 							
 							notifyAll();
 							
