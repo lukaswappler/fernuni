@@ -2,12 +2,12 @@ package fernuni.obj.ea6.a1;
 
 class Test extends Thread {
     public void run() {
-        while (true) {
+        while (!isInterrupted()) {
             System.out.println("Hallo, ich komme.");
             try {
                 Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (InterruptedException e) {                  
+                interrupt();
             }
         }
     }

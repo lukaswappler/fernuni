@@ -5,6 +5,7 @@ public class Warum {
         Test t = new Test();
         t.start();
         t.dotry();
-        t.stop();
+        //t.stop();
+        t.interrupt();
     }
 }
