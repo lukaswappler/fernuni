@@ -102,11 +102,5 @@ public class Tisch {
 
 	public List<Philosoph> getGuests() {
 		return guests;
-	}
-	
-	synchronized public void notifyAboutUnusedBar() {
-		for (Philosoph philosoph : guests) {
-			philosoph.notify();
-		}
-	}
+	}		
 }

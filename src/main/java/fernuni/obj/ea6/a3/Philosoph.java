@@ -43,77 +43,90 @@ public class Philosoph extends Thread {
 					}
 					
 					if (PhilosophState.philosophierend.equals(state)) {					
-						state = PhilosophState.hungrig;
-						System.out.println(philosophName + " hat genug philosophiert und ist jetzt hungrig");
+						handlePhilosophierendState();
 						continue;
 					}
 					
 					if (PhilosophState.hungrig.equals(state)) {
-						//Philosoph.sleep(getRandomWaitTime());
-											
-						if (!hasLeftBar && this.choosenBowl.getLeftBar().isUsed()) {
-							System.out.println(philosophName + " wartet auf linkes Stäbchen");
-							continue;
-						} else if (!hasLeftBar && !this.choosenBowl.getLeftBar().isUsed()) {
-							this.choosenBowl.getLeftBar().setUsed(true);
-							hasLeftBar = true;
-							System.out.println(philosophName + " hat das linke Stäbchen");
-							continue;
-						}
-						
-						if (!hasRightBar && this.choosenBowl.getRightBar().isUsed()) {
-							System.out.println(philosophName + " wartet auf rechtes Stäbchen");
-							continue;
-						} else if (!hasRightBar && !this.choosenBowl.getRightBar().isUsed()) {
-							this.choosenBowl.getRightBar().setUsed(true);
-							hasRightBar = true;
-							System.out.println(philosophName + " hat das rechte Stäbchen");
-							continue;
-						}
-	
-						if (hasLeftBar && hasRightBar) {
-							this.state = PhilosophState.essend;
-							System.out.println(philosophName + " hat beide Stabchen uns isst");
-							continue;
-						}																							
+						handleHungrigState();
+						continue;																																
 					}
-					
-					
 					
 					if (PhilosophState.essend.equals(state)) {										
-						
-						if (hasLeftBar) {					
-							this.choosenBowl.getLeftBar().setUsed(false);
-							hasLeftBar = false;
-							System.out.println(philosophName + " legt das linke Stäbchen hin");
-							
-							notifyAll();
-							
-							continue;
-						}
-						
-						if (hasRightBar) {
-							this.choosenBowl.getRightBar().setUsed(false);
-							hasRightBar = false;
-							System.out.println(philosophName + " legt das rechte Stäbchen hin");
-							
-							notifyAll();
-							
-							continue;
-						}
-						
-						if (!hasLeftBar && !hasRightBar) {
-							state = PhilosophState.philosophierend;
-							System.out.println(philosophName + " hat lange genug gegessen und ist philosophiert jetzt wieder");
-							continue;
-						}
+						handleEssendState();
+						continue;
 					}
+					
 				} catch (InterruptedException e) {					
 					isInterrupted = true;
 				}
 			}
 		}
 	}
+
+	private void handlePhilosophierendState() {
+		state = PhilosophState.hungrig;
+		System.out.println(philosophName + " hat genug philosophiert und ist jetzt hungrig");
+	}
+
+	private void handleHungrigState() {
+		if (!hasLeftBar && this.choosenBowl.getLeftBar().isUsed()) {
+			System.out.println(philosophName + " wartet auf linkes Stäbchen");
+			return;
+		} else if (!hasLeftBar && !this.choosenBowl.getLeftBar().isUsed()) {
+			this.choosenBowl.getLeftBar().setUsed(true);
+			hasLeftBar = true;
+			System.out.println(philosophName + " hat das linke Stäbchen");
+			return;
+		}
+		
+		if (!hasRightBar && this.choosenBowl.getRightBar().isUsed()) {
+			System.out.println(philosophName + " wartet auf rechtes Stäbchen");
+			return;
+		} else if (!hasRightBar && !this.choosenBowl.getRightBar().isUsed()) {
+			this.choosenBowl.getRightBar().setUsed(true);
+			hasRightBar = true;
+			System.out.println(philosophName + " hat das rechte Stäbchen");
+			return;
+		}
+
+		if (hasLeftBar && hasRightBar) {
+			this.state = PhilosophState.essend;
+			System.out.println(philosophName + " hat beide Stabchen uns isst");
+			return;
+		}		
+	}
+	
+	private void handleEssendState() {
+		if (hasLeftBar) {					
+			this.choosenBowl.getLeftBar().setUsed(false);
+			hasLeftBar = false;
+			System.out.println(philosophName + " legt das linke Stäbchen hin");
+			
+			notifyAll();
+			
+			return;
+		}
+		
+		if (hasRightBar) {
+			this.choosenBowl.getRightBar().setUsed(false);
+			hasRightBar = false;
+			System.out.println(philosophName + " legt das rechte Stäbchen hin");
+			
+			notifyAll();
+			return;
+
+		}
+		
+		if (!hasLeftBar && !hasRightBar) {
+			state = PhilosophState.philosophierend;
+			System.out.println(philosophName + " hat lange genug gegessen, seine Stäbchen hingelegt und ist philosophiert jetzt wieder");
+
+			return;
+		}
+	}
+
+	
 
 	private void waitSomeTime() throws InterruptedException {
 		this.wait( (int) (Math.random() * 10000));		
