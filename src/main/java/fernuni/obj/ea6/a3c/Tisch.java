@@ -90,13 +90,21 @@ public class Tisch {
 
 
 	public Schuessel getFreeBowl() {
+		List<Schuessel> freeBowls = new ArrayList<Tisch.Schuessel>(); 
+		
 		for (int i = 0; i < this.schuesseln.length; i++) {
 			if (schuesseln[i].isUsedFrom == null) {								
-				return schuesseln[i]; 
+				freeBowls.add(schuesseln[i]); 
 			}
 		}
 		
-		return null;
+		//get randomized free bowl;
+		if (freeBowls.size() > 0) {
+			int randomIndex = (int) ((Math.random() * 10) % freeBowls.size());
+			return freeBowls.get(randomIndex);			
+		} else {
+			return null;
+		}
 	}
 
 

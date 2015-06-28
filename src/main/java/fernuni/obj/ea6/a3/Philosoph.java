@@ -1,4 +1,4 @@
-package fernuni.obj.ea6.a3;
+Philosopackage fernuni.obj.ea6.a3;
 
 import fernuni.obj.ea6.a3.Tisch.Schuessel;
 

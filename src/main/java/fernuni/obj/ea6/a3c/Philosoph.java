@@ -9,15 +9,20 @@ public class Philosoph extends Thread {
 	private String philosophName;
 	
 	private Schuessel choosenBowl;
+
+	private Tisch choosenTable;
 	
 	private PhilosophState state;
 	
+	
+
+
 	boolean hasLeftBar = false;
 	boolean hasRightBar = false;
 
 	boolean isInterrupted = false;
 	
-	private Tisch choosenTable;
+	
 	
 	public Philosoph(String philosophName) {
 		this.philosophName = philosophName;		
@@ -36,14 +41,21 @@ public class Philosoph extends Thread {
 					waitSomeTime();					
 					
 					//leave bar if no seat is free
-					if (choosenBowl == null) {
+					/*if (choosenBowl == null) {
 						System.out.println(philosophName + " hat keine frei Schuessel gefunden und geht wieder nach Hause");
 						isAlive = false;
 						return;
-					}
+					}*/
 					
 					if (PhilosophState.philosophierend.equals(state)) {					
 						handlePhilosophierendState();
+						continue;
+					}
+					
+					if (PhilosophState.wartend.equals(state)) {
+						if (choosenBowl != null && choosenTable != null) {
+							state = PhilosophState.hungrig;
+						}
 						continue;
 					}
 					
@@ -65,7 +77,7 @@ public class Philosoph extends Thread {
 	}
 
 	private void handlePhilosophierendState() {
-		state = PhilosophState.hungrig;
+		state = PhilosophState.wartend;
 		System.out.println(philosophName + " hat genug philosophiert und ist jetzt hungrig");
 	}
 
@@ -120,7 +132,15 @@ public class Philosoph extends Thread {
 		
 		if (!hasLeftBar && !hasRightBar) {
 			state = PhilosophState.philosophierend;
-			System.out.println(philosophName + " hat lange genug gegessen, seine Stäbchen hingelegt und ist philosophiert jetzt wieder");
+			
+			this.choosenTable.getGuests().remove(this);
+			this.choosenBowl.setIsUsedFrom(null);	
+				
+			
+			this.choosenBowl = null;
+			this.choosenTable = null;
+			
+			System.out.println(philosophName + " hat lange genug gegessen, seine Stäbchen hingelegt und ist philosophiert jetzt wieder und steht vom Tisch auf");
 
 			return;
 		}
@@ -141,7 +161,7 @@ public class Philosoph extends Thread {
 			tisch.getGuests().add(this);
 			
 			this.choosenBowl = freeBowl;
-			this.choosenTable = tisch;
+			this.setChoosenTable(tisch);
 			
 			System.out.println(philosophName + " hat sich an den Tisch gesetzt und Schuessel '" + String.valueOf(freeBowl.getBowlNumber()) +"' bekommen.");
 		} else {
@@ -157,9 +177,34 @@ public class Philosoph extends Thread {
 		this.philosophName = philosophName;
 	}
 	
+	public Tisch getChoosenTable() {
+		return choosenTable;
+	}
+
+	public void setChoosenTable(Tisch choosenTable) {
+		this.choosenTable = choosenTable;
+	}
+
+	public Schuessel getChoosenBowl() {
+		return choosenBowl;
+	}
+
+	public void setChoosenBowl(Schuessel choosenBowl) {
+		this.choosenBowl = choosenBowl;
+	}
+
+	public void setPhilosophState(PhilosophState state) {
+		this.state = state;
+	}
+	
+	public PhilosophState getPhilosophState() {
+		return this.state;
+	}
+	
 	public enum PhilosophState {
 		philosophierend,
 		hungrig,
-		essend;
+		essend,
+		wartend; //warted auf freien Tisch 
 	}
 }
