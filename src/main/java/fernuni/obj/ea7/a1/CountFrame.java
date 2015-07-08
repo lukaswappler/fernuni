@@ -16,7 +16,9 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class CountFrame extends Frame {
-    Button bDec = new Button("<");
+    private static final long serialVersionUID = -6023926227935950215L;
+	
+	Button bDec = new Button("<");
     Button bInc = new Button(">");
     Button bQuit = new Button("quit");
     TextField tCounter = new TextField(3);

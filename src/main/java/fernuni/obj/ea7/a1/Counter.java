@@ -6,6 +6,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 
 class Counter extends UnicastRemoteObject implements CounterInterface {
+	
+	private static final long serialVersionUID = -3112791128193082812L;
+	
 	private int startValue;
 	private int value;
 	private int min = 0;
@@ -15,7 +18,6 @@ class Counter extends UnicastRemoteObject implements CounterInterface {
 		startValue = start;
 		value = start;
 	}
-
 	
 	public static void main(String args[]) throws Exception {
         System.out.println("RMI server started");
@@ -28,13 +30,11 @@ class Counter extends UnicastRemoteObject implements CounterInterface {
             System.out.println("java RMI registry already exists.");
         }
 
-        // Instantiate RmiServer
-
+        //Instanciate Remote Object
         Counter obj = new Counter(50);
 
-        // Bind this object instance to the name "RmiServer"
-        Naming.rebind("//localhost/Counter", obj);
-        System.out.println("PeerServer bound in registry");
+        // Bind this object instance to the name "Counter"
+        Naming.rebind("//localhost/Counter", obj);        
     }
 	
 	public void incr() {
