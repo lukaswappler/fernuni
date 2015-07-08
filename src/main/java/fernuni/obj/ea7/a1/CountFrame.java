@@ -15,88 +15,69 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-public class CountFrame extends Frame{
-	Button bDec = new Button("<");
-	Button bInc = new Button(">");
-	Button bQuit = new Button("quit");
-	TextField tCounter = new TextField(3);
-	CounterInterface c = null;
+public class CountFrame extends Frame {
+    Button bDec = new Button("<");
+    Button bInc = new Button(">");
+    Button bQuit = new Button("quit");
+    TextField tCounter = new TextField(3);
+    CounterInterface c = null;
 
-	public CountFrame() throws RemoteException, MalformedURLException, NotBoundException {
-		
-	    final CounterInterface c = (CounterInterface) Naming
-                .lookup("//localhost/Counter");
-	    
-	    tCounter.setEditable(false);
-		tCounter.setText(c.getValue());
-		// geeignete Beobachter registrieren
-		bDec.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
+    public CountFrame() throws RemoteException, MalformedURLException, NotBoundException {
+
+        final CounterInterface c = (CounterInterface) Naming.lookup("//localhost/Counter");
+
+        tCounter.setEditable(false);
+        tCounter.setText(c.getValue());
+        // geeignete Beobachter registrieren
+        bDec.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
                     c.decr();
-                } catch (RemoteException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-				try {
                     tCounter.setText(c.getValue());
-                } catch (RemoteException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+                } catch (RemoteException e2) {
+                    e2.printStackTrace();
                 }
-			}
-		});
-		bInc.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
+            }
+        });
+        bInc.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
                     c.incr();
-                } catch (RemoteException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-				try {
                     tCounter.setText(c.getValue());
                 } catch (RemoteException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
-			}
-		});
-		bQuit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
+            }
+        });
+        bQuit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
                     c.resetCounter();
-                } catch (RemoteException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-				try {
                     tCounter.setText(c.getValue());
                 } catch (RemoteException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
-			}
-		});
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-		// Komponenten in richtiger Reihenfolge in Panel einfuegen
-		Panel p = new Panel(new FlowLayout());
-		p.add(bDec);
-		p.add(tCounter);
-		p.add(bInc);
-		// Komponenten in Hauptfenster einfuegen
-		add(p, BorderLayout.CENTER);
-		add(bQuit, BorderLayout.SOUTH);
-		// Fenstergroesse festlegen
-		setSize(120, 100);
-	}
+            }
+        });
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+        // Komponenten in richtiger Reihenfolge in Panel einfuegen
+        Panel p = new Panel(new FlowLayout());
+        p.add(bDec);
+        p.add(tCounter);
+        p.add(bInc);
+        // Komponenten in Hauptfenster einfuegen
+        add(p, BorderLayout.CENTER);
+        add(bQuit, BorderLayout.SOUTH);
+        // Fenstergroesse festlegen
+        setSize(120, 100);
+    }
 
-	public static void main(String[] args) throws RemoteException, MalformedURLException, NotBoundException {
-		CountFrame countFrame = new CountFrame();
-		countFrame.setVisible(true);
-	}
+    public static void main(String[] args) throws RemoteException, MalformedURLException, NotBoundException {
+        CountFrame countFrame = new CountFrame();
+        countFrame.setVisible(true);
+    }
 }
