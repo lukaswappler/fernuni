@@ -6,12 +6,12 @@ import java.awt.Graphics;
 
 public class Light extends Canvas
 {
+    private static final long serialVersionUID = 4367565159572636730L;
+    
     int x;
     int y;
     float ballRadius;
     Color ballColor;
-     
- 
      
     public Light(int x, int y, float radius, Color color)
     {
@@ -20,20 +20,11 @@ public class Light extends Canvas
         
         ballRadius = radius;
         ballColor = color;
- 
     }
- 
-         
+
     public void paint(Graphics g)   
     {
- 
-        //super.paint(g);
-        //g.setClip(x,y,(int)ballRadius,(int)ballRadius);
         g.setColor(ballColor);
         g.fillOval(x,y,(int)ballRadius,(int)ballRadius);
- 
-     
     }
-     
- 
 }
