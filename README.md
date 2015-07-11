@@ -9,4 +9,8 @@ EA3 abgegeben
 
 EA4 abgegeben
 
-EA5 in Arbeit
+EA5 abgegeben
+
+EA6 abgegeben
+
+EA7 in arbeit
