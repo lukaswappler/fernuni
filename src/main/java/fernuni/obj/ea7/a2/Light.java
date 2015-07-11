@@ -13,6 +13,8 @@ public class Light extends Canvas
     float ballRadius;
     Color ballColor;
      
+    Graphics g;
+    
     public Light(int x, int y, float radius, Color color)
     {
         this.x = x;
@@ -23,8 +25,29 @@ public class Light extends Canvas
     }
 
     public void paint(Graphics g)   
-    {
+    {        
         g.setColor(ballColor);
         g.fillOval(x,y,(int)ballRadius,(int)ballRadius);
+        
+//        this.g = g;
     }
+    
+    public void turnOn() {        
+        this.getGraphics().setColor(Color.BLACK);   
+        this.getGraphics().fillOval(x,y,(int)ballRadius,(int)ballRadius);
+        this.doLayout();
+        //        g.setColor(Color.BLACK);
+//        g.fillOval(x,y,(int)ballRadius,(int)ballRadius);        
+    }
+    
+    public void turnOff() {
+//        g.setColor(Color.BLACK);
+//        g.fillOval(x,y,(int)ballRadius,(int)ballRadius);
+        
+        this.getGraphics().setColor(Color.BLACK);   
+        this.getGraphics().fillOval(x,y,(int)ballRadius,(int)ballRadius);
+        
+        this.doLayout();
+    }
+    
 }

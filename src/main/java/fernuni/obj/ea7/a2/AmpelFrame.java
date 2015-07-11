@@ -22,6 +22,8 @@ public class AmpelFrame extends Frame {
     public static final int FRAME_HEIGHT = 400;
     public static final int FRAME_WIDTH = 120;
     
+    public static Light redLight = new Light(10, 10, 100, Color.RED);
+    
     public AmpelFrame() {
         
         
@@ -37,28 +39,17 @@ public class AmpelFrame extends Frame {
         //Canvas redLight = new Canvas();
         this.setLayout(layout);
         
-        Light redLight = new Light(10, 10, 100, Color.RED);
+        
         Light yellowLight = new Light(10, 10, 100, Color.YELLOW);
         Light greenLight = new Light(10, 10, 100, Color.GREEN);
         
         
         LayoutManager flowLayout = new FlowLayout();        
-        /* Zifferntasten ggf. erzeugen und in Ziffernpanel einfuegen */
-        //Panel centerContainer = new Panel();        
-        //centerContainer.setLayout(flowLayout);
-        
-        //centerContainer.add(light);
-        
-        //this.add(light);
+                
         this.add(redLight);
         this.add(yellowLight);
         this.add(greenLight);
         
-        
-        
-        
-        //redLight.
-        //redLight.
         
         addWindowListener(new WindowAdapter() {
           public void windowClosing(WindowEvent e) {
@@ -67,69 +58,14 @@ public class AmpelFrame extends Frame {
       });
         
     }
-    
-    //Button bDec = new Button("<");
-    //Button bInc = new Button(">");
-    //Button bQuit = new Button("quit");
-    //TextField tCounter = new TextField(3);
-//    CounterInterface c = null;
-//
-//    public CountFrame() throws RemoteException, MalformedURLException, NotBoundException {
-//
-//        final CounterInterface c = (CounterInterface) Naming.lookup("//localhost/Counter");
-//
-//        tCounter.setEditable(false);
-//        tCounter.setText(c.getValue());
-//        // geeignete Beobachter registrieren
-//        bDec.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    c.decr();
-//                    tCounter.setText(c.getValue());
-//                } catch (RemoteException e2) {
-//                    e2.printStackTrace();
-//                }
-//            }
-//        });
-//        bInc.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    c.incr();
-//                    tCounter.setText(c.getValue());
-//                } catch (RemoteException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        });
-//        bQuit.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    c.resetCounter();
-//                    tCounter.setText(c.getValue());
-//                } catch (RemoteException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        });
-//        addWindowListener(new WindowAdapter() {
-//            public void windowClosing(WindowEvent e) {
-//                System.exit(0);
-//            }
-//        });
-//        // Komponenten in richtiger Reihenfolge in Panel einfuegen
-//        Panel p = new Panel(new FlowLayout());
-//        p.add(bDec);
-//        p.add(tCounter);
-//        p.add(bInc);
-//        // Komponenten in Hauptfenster einfuegen
-//        add(p, BorderLayout.CENTER);
-//        add(bQuit, BorderLayout.SOUTH);
-//        // Fenstergroesse festlegen
-//        setSize(120, 100);
-//    }
 
-    public static void main(String[] args) throws RemoteException, MalformedURLException, NotBoundException {
+    public static void main(String[] args) throws RemoteException, MalformedURLException, NotBoundException, InterruptedException {
         AmpelFrame ampel = new AmpelFrame();
         ampel.setVisible(true);
+        
+        Thread.sleep(1000);
+        
+        redLight.turnOff();
+        
     }
 }
