@@ -15,6 +15,8 @@ public class Light extends Canvas
      
     Graphics g;
     
+    boolean isTurnedOn = false;
+    
     public Light(int x, int y, float radius, Color color)
     {
         this.x = x;
@@ -26,28 +28,25 @@ public class Light extends Canvas
 
     public void paint(Graphics g)   
     {        
-        g.setColor(ballColor);
+        if (isTurnedOn) {
+        	g.setColor(ballColor);	
+        } else {
+        	g.setColor(Color.BLACK);
+        }
+         
         g.fillOval(x,y,(int)ballRadius,(int)ballRadius);
-        
-//        this.g = g;
     }
     
     public void turnOn() {        
-        this.getGraphics().setColor(Color.BLACK);   
-        this.getGraphics().fillOval(x,y,(int)ballRadius,(int)ballRadius);
-        this.doLayout();
-        //        g.setColor(Color.BLACK);
-//        g.fillOval(x,y,(int)ballRadius,(int)ballRadius);        
+        
+    	isTurnedOn = true;
+
+        this.repaint();        
     }
     
     public void turnOff() {
-//        g.setColor(Color.BLACK);
-//        g.fillOval(x,y,(int)ballRadius,(int)ballRadius);
+    	isTurnedOn = false;
         
-        this.getGraphics().setColor(Color.BLACK);   
-        this.getGraphics().fillOval(x,y,(int)ballRadius,(int)ballRadius);
-        
-        this.doLayout();
+        this.repaint();
     }
-    
 }

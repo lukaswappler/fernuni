@@ -8,13 +8,19 @@ class SourceOfMyEvents {
 	private int state = 0;
 
 	public int nextState() {
-		state = (state + 1) % 2;
+		state = (state + 1) % 4;
 		switch (state) {
 		case 0:
-			fireFirstEvent(new MyEventsEvent(this));
+			fireRedEvent(new MyEventsEvent(this));
 			break;
 		case 1:
-			fireSecondEvent(new MyEventsEvent(this));
+			fireRedYellowEvent(new MyEventsEvent(this));
+			break;
+		case 2:
+			fireGreenEvent(new MyEventsEvent(this));
+			break;
+		case 3:
+			fireYellowEvent(new MyEventsEvent(this));
 			break;
 		default: {
 		}
@@ -45,22 +51,42 @@ class SourceOfMyEvents {
 	// 'feuern', d.h. alle registrierten Listener ueber das Eintreten dieses
 	// Ereignisses durch Aufruf der entsprechenden Methode des
 	// MyEventsListener-Interfaces informieren.
-	protected void fireFirstEvent(MyEventsEvent e) {
+	protected void fireRedEvent(MyEventsEvent e) {
 		if (myEventsListeners != null) {
 			Vector<MyEventsListener> listeners = myEventsListeners;
 			int count = listeners.size();
 			for (int i = 0; i < count; i++) {
-				listeners.elementAt(i).firstEvent(e);
+				listeners.elementAt(i).fireRedEvent(e);
 			}
 		}
 	}
-
-	protected void fireSecondEvent(MyEventsEvent e) {
+	
+	protected void fireRedYellowEvent(MyEventsEvent e) {
 		if (myEventsListeners != null) {
 			Vector<MyEventsListener> listeners = myEventsListeners;
 			int count = listeners.size();
 			for (int i = 0; i < count; i++) {
-				listeners.elementAt(i).secondEvent(e);
+				listeners.elementAt(i).fireRedYellowEvent(e);
+			}
+		}
+	}
+	
+	protected void fireGreenEvent(MyEventsEvent e) {
+		if (myEventsListeners != null) {
+			Vector<MyEventsListener> listeners = myEventsListeners;
+			int count = listeners.size();
+			for (int i = 0; i < count; i++) {
+				listeners.elementAt(i).fireGreenEvent(e);
+			}
+		}
+	}
+	
+	protected void fireYellowEvent(MyEventsEvent e) {
+		if (myEventsListeners != null) {
+			Vector<MyEventsListener> listeners = myEventsListeners;
+			int count = listeners.size();
+			for (int i = 0; i < count; i++) {
+				listeners.elementAt(i).fireYellowEvent(e);
 			}
 		}
 	}
