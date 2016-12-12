@@ -1,0 +1,183 @@
+package de.wap.selenium.compareselenium;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FileUtils;
+import org.junit.Test;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class WebDriverBackedSeleniumTest {
+
+	@Test
+	public void test() {
+		System.out.println("test");
+	}
+
+	@Test
+	public void testWebDriverBackedSelenium() {
+		// WebDriver-Klasse aus Selenium 2:
+
+		// ChromeOptions chromeOptions = new ChromeOptions();
+		// chromeOptions.setBinary("D:/Programmierung/selenium");
+		System.setProperty("webdriver.chrome.driver", "D:/Programmierung/selenium/chromedriver.exe");
+		ChromeDriver webDriver = new ChromeDriver();
+		webDriver.manage().window().maximize();
+		// webDriver.Chrome('/path/to/chromedriver')
+
+		// // Selenium-Klasse aus Selenium 1:
+
+		// D:\Programmierung\selenium
+
+		// Selenium selenium = new WebDriverBackedSelenium(webDriver,
+		// "http://www.google.de");
+		try {
+
+			List<String> urls = new ArrayList();
+			urls.add("http://www.keymondo.de/index.php");
+			urls.add("http://www.keymondo.de/orte.php");
+			urls.add("http://www.keymondo.de/schwerpunkte.php");
+			urls.add("http://www.keymondo.de/schluesseldienste/index.php");
+			urls.add("http://www.keymondo.de/schluesseldienste/schlusseldienst-meyer.php");
+			urls.add("http://www.keymondo.de/schluesseldienste/suche.php?where=Nürnberg");
+			urls.add("http://www.keymondo.de/schluesseldienste/suche.php?lat=49.4519484&lon=11.0761133");
+			urls.add("http://www.keymondo.de/ratgeber/index.php");
+			urls.add("http://www.keymondo.de/ratgeber/checkliste-wie-sie-einen-seriosen-schlusseldienst-finden.php");
+			urls.add("http://www.keymondo.de/ratgeber/suche.php?keyword=checkliste");
+			urls.add("http://www.keymondo.de/nurnberg.php");
+			urls.add("http://www.keymondo.de/notdienst.php");
+			urls.add("http://www.keymondo.de/nurnberg/notdienst.php (SEO V2)");
+			urls.add("http://www.keymondo.de/fuer-schluesseldienste.php");
+			urls.add("http://www.keymondo.de/wurzelbrmpft.php");
+			urls.add("http://www.keymondo.de/kontakt.php");
+			urls.add("http://www.keymondo.de/impressum.php");
+
+			for (String url : urls) {
+				takeAScreenhost(webDriver, url);
+			}
+			
+			// takeAScreenhost(webDriver, "http://www.google.de");
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			webDriver.close();
+			// selenium.stop();
+		}
+	}
+
+	private void takeAScreenhost(ChromeDriver webDriver, String url) {
+		webDriver.get(url);
+		File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
+		try {
+			
+			String filename = url.replaceAll("[:\\\\/*\"?|<>']", "");
+			filename = filename.replace(".php", "");
+			FileUtils.copyFile(scrFile, new File("D:/Programmierung/selenium/screenshots/" + filename + ".png"));
+			
+			File fileOrig = FileUtils.getFile("D:/Programmierung/selenium/screenshots/compare/" + filename + ".png");
+			File fileNew = FileUtils.getFile("D:/Programmierung/selenium/screenshots/" + filename + ".png");
+			
+			BufferedImage imageOrig = ImageIO.read(fileOrig);
+			BufferedImage imageNew = ImageIO.read(fileNew);
+
+			BufferedImage differenceImage = getDifferenceImage(imageOrig, imageNew);
+
+			if (differenceImage != null) {
+				ImageIO.write(differenceImage, "png", new File("D:/Programmierung/selenium/screenshots/output/" + filename + ".png"));
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static BufferedImage getDifferenceImage(BufferedImage img1, BufferedImage img2) {
+	    // convert images to pixel arrays...
+		boolean changes = false;
+		
+		final int w = img1.getWidth(),
+	            h = img1.getHeight(), 
+	            highlight = Color.MAGENTA.getRGB();
+	    final int[] p1 = img1.getRGB(0, 0, w, h, null, 0, w);
+	    final int[] p2 = img2.getRGB(0, 0, w, h, null, 0, w);
+	    // compare img1 to img2, pixel by pixel. If different, highlight img1's pixel...
+	    for (int i = 0; i < p1.length; i++) {
+	        if (p1[i] != p2[i]) {
+	            p1[i] = highlight;
+	            changes = true;
+	        }
+	    }
+	    // save img1's pixels to a new BufferedImage, and return it...
+	    // (May require TYPE_INT_ARGB)
+	    final BufferedImage out = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+	    out.setRGB(0, 0, w, h, p1, 0, w);
+	    
+	    if (changes) {
+	    	return out;
+	    } else {
+	    	return null;
+	    }
+	}
+	
+//	public static BufferedImage createImg(File file) {
+//		BufferedImage in = ImageIO.read(img);
+//
+//		BufferedImage newImage = new BufferedImage(
+//		    in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
+//
+//		Graphics2D g = newImage.createGraphics();
+//		g.drawImage(in, 0, 0, null);
+//		g.dispose();
+//		
+//		return 
+//	}
+}
+
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>de.wap.selenium</groupId>
+	<artifactId>compareselenium</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>compareselenium</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+
+	</dependencies>
+</project>
